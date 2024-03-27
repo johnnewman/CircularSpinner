@@ -3,6 +3,7 @@
 //  CircularSpinner
 //
 //  Created by John Newman on 3/25/24.
+//  Copyright (c) 2024 John Newman
 //
 
 import SwiftUI
@@ -78,7 +79,7 @@ public struct CircularSpinner<Background: ShapeStyle, Foreground: ShapeStyle>: V
             // Background circle.
             circle(style: backgroundStyle, length: 1)
             
-            // Animated forground.
+            // Animated forground circle.
             circle(style: foregroundStyle, length: trimLength.value)
                 .rotationEffect(currentAngle)
                 .animation(spinAnimation, value: previousAngle)
@@ -87,8 +88,8 @@ public struct CircularSpinner<Background: ShapeStyle, Foreground: ShapeStyle>: V
                     cycleAnimation()
                 }
         }
-        .conditionalWidth(diameter)
         .padding(strokeWidth / 2)
+        .conditionalWidth(diameter)
     }
 }
 
@@ -102,22 +103,25 @@ extension View {
     }
 }
 
-#Preview("ContainerSize") {
+#Preview("Diameter") {
     VStack {
         CircularSpinner(
             animationDuration: 2,
+            diameter: 60,
             backgroundStyle: .black,
             foregroundStyle: .thickMaterial.shadow(.inner(radius: 3))
         )
         
         CircularSpinner(
             animationDuration: 1.75,
+            diameter: 60,
             backgroundStyle: Color.secondary,
             foregroundStyle: Color.primary
         )
         
         CircularSpinner(
             animationDuration: 1.5,
+            diameter: 60,
             backgroundStyle: Color.black,
             foregroundStyle: LinearGradient(
                 colors: [.purple, .red],
@@ -128,55 +132,56 @@ extension View {
         
         CircularSpinner(
             animationDuration: 1.25,
+            diameter: 60,
             backgroundStyle: .radialGradient(
                 colors: [.green, .red],
                 center: .center,
-                startRadius: 45-10,
+                startRadius: 30-10,
+                endRadius: 30
+            ),
+            foregroundStyle: .cyan.shadow(.drop(radius: 2))
+        )
+    }
+}
+
+#Preview("ContainerSize") {
+    VStack {
+        CircularSpinner(
+            strokeWidth: 15,
+            animationDuration: 2,
+            backgroundStyle: .black,
+            foregroundStyle: .thickMaterial.shadow(.inner(radius: 3))
+        )
+        
+        CircularSpinner(
+            strokeWidth: 15,
+            animationDuration: 1.75,
+            backgroundStyle: Color.secondary,
+            foregroundStyle: Color.primary
+        )
+        
+        CircularSpinner(
+            strokeWidth: 15,
+            animationDuration: 1.5,
+            backgroundStyle: Color.black,
+            foregroundStyle: LinearGradient(
+                colors: [.purple, .red],
+                startPoint: .leading,
+                endPoint: .trailing
+            )
+        )
+        
+        CircularSpinner(
+            strokeWidth: 15,
+            animationDuration: 1.25,
+            backgroundStyle: .radialGradient(
+                colors: [.green, .red],
+                center: .center,
+                startRadius: 45-15,
                 endRadius: 45
             ),
             foregroundStyle: .cyan.shadow(.drop(radius: 2))
         )
     }
     .frame(width: 90)
-}
-
-#Preview("Diameter") {
-    VStack {
-        CircularSpinner(
-            animationDuration: 2,
-            diameter: 50,
-            backgroundStyle: .black,
-            foregroundStyle: .thickMaterial.shadow(.inner(radius: 3))
-        )
-        
-        CircularSpinner(
-            animationDuration: 1.75,
-            diameter: 50,
-            backgroundStyle: Color.secondary,
-            foregroundStyle: Color.primary
-        )
-        
-        CircularSpinner(
-            animationDuration: 1.5,
-            diameter: 50,
-            backgroundStyle: Color.black,
-            foregroundStyle: LinearGradient(
-                colors: [.purple, .red],
-                startPoint: .leading,
-                endPoint: .trailing
-            )
-        )
-        
-        CircularSpinner(
-            animationDuration: 1.25,
-            diameter: 50,
-            backgroundStyle: .radialGradient(
-                colors: [.green, .red],
-                center: .center,
-                startRadius: 25-10,
-                endRadius: 25
-            ),
-            foregroundStyle: .cyan.shadow(.drop(radius: 2))
-        )
-    }
 }

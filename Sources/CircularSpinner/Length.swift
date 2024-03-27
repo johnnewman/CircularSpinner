@@ -3,6 +3,7 @@
 //  CircularSpinner
 //
 //  Created by John Newman on 3/25/24.
+//  Copyright (c) 2024 John Newman
 //
 
 import Foundation
