@@ -122,7 +122,7 @@ extension View {
         CircularSpinner(
             animationDuration: 1.5,
             diameter: 60,
-            backgroundStyle: Color.black,
+            backgroundStyle: Color.teal,
             foregroundStyle: LinearGradient(
                 colors: [.purple, .red],
                 startPoint: .leading,
@@ -163,7 +163,7 @@ extension View {
         CircularSpinner(
             strokeWidth: 15,
             animationDuration: 1.5,
-            backgroundStyle: Color.black,
+            backgroundStyle: Color.teal,
             foregroundStyle: LinearGradient(
                 colors: [.purple, .red],
                 startPoint: .leading,
