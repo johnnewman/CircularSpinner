@@ -13,7 +13,7 @@ You can create a simple spinner using the default initalizer parameters:
 CircularSpinner()
 ```
 
-You can also customize the animation timing and styling:
+Alternatively, you can customize the animation timing and styling:
 ```Swift
 CircularSpinner(
     animationDuration: 1.5,
