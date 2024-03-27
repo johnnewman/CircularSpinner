@@ -8,9 +8,12 @@
 import SwiftUI
 import Combine
 
+/// A View that will infinitely animate a circle with a foreground that spins.
 public struct CircularSpinner<Background: ShapeStyle, Foreground: ShapeStyle>: View {
     
-    let lineWidth: CGFloat
+    let strokeWidth: CGFloat
+    
+    let diameter: CGFloat?
         
     let backgroundStyle: Background
     
@@ -27,11 +30,21 @@ public struct CircularSpinner<Background: ShapeStyle, Foreground: ShapeStyle>: V
     /// This is toggled between values to oscillate the foreground circle's length.
     @State private var trimLength: Length = .short
     
-    public init(lineWidth: CGFloat = 10,
+    /// Initializes the CircularSpinner, which will begin animating as soon as
+    /// it appears.
+    /// - Parameters:
+    ///   - lineWidth: The stroke width to use for the circle.
+    ///   - animationDuration: The duration of a spin cycle that rotates 2 revolutions.
+    ///   - radius: The radius of the spinner.
+    ///   - backgroundStyle: The ShapeStyle to apply to the full background circle.
+    ///   - foregroundStyle: The ShapeStyle to apply to the spinning circle.
+    public init(strokeWidth: CGFloat = 10,
                 animationDuration: TimeInterval = 1.75,
+                diameter: CGFloat? = nil,
                 backgroundStyle: Background = Color.secondary,
                 foregroundStyle: Foreground = Color.primary) {
-        self.lineWidth = lineWidth
+        self.strokeWidth = strokeWidth
+        self.diameter = diameter
         self.backgroundStyle = backgroundStyle
         self.foregroundStyle = foregroundStyle
         self.spinAnimation = .interpolatingSpring(duration: animationDuration)
@@ -47,7 +60,7 @@ public struct CircularSpinner<Background: ShapeStyle, Foreground: ShapeStyle>: V
             .trim(from: 0, to: length)
             .stroke(
                 style: StrokeStyle(
-                    lineWidth: lineWidth,
+                    lineWidth: strokeWidth,
                     lineCap: .round
                 )
             )
@@ -74,28 +87,36 @@ public struct CircularSpinner<Background: ShapeStyle, Foreground: ShapeStyle>: V
                     cycleAnimation()
                 }
         }
-        .padding(lineWidth / 2)
+        .conditionalWidth(diameter)
+        .padding(strokeWidth / 2)
     }
 }
 
-#Preview {
+extension View {
+    @ViewBuilder func conditionalWidth(_ width: CGFloat?) -> some View {
+        if let width = width {
+            self.frame(width: width)
+        } else {
+            self
+        }
+    }
+}
+
+#Preview("ContainerSize") {
     VStack {
         CircularSpinner(
-            lineWidth: 10,
             animationDuration: 2,
             backgroundStyle: .black,
             foregroundStyle: .thickMaterial.shadow(.inner(radius: 3))
         )
         
         CircularSpinner(
-            lineWidth: 10,
             animationDuration: 1.75,
             backgroundStyle: Color.secondary,
             foregroundStyle: Color.primary
         )
         
         CircularSpinner(
-            lineWidth: 10,
             animationDuration: 1.5,
             backgroundStyle: Color.black,
             foregroundStyle: LinearGradient(
@@ -106,8 +127,49 @@ public struct CircularSpinner<Background: ShapeStyle, Foreground: ShapeStyle>: V
         )
         
         CircularSpinner(
-            lineWidth: 10,
             animationDuration: 1.25,
+            backgroundStyle: .radialGradient(
+                colors: [.green, .red],
+                center: .center,
+                startRadius: 45-10,
+                endRadius: 45
+            ),
+            foregroundStyle: .cyan.shadow(.drop(radius: 2))
+        )
+    }
+    .frame(width: 90)
+}
+
+#Preview("Diameter") {
+    VStack {
+        CircularSpinner(
+            animationDuration: 2,
+            diameter: 50,
+            backgroundStyle: .black,
+            foregroundStyle: .thickMaterial.shadow(.inner(radius: 3))
+        )
+        
+        CircularSpinner(
+            animationDuration: 1.75,
+            diameter: 50,
+            backgroundStyle: Color.secondary,
+            foregroundStyle: Color.primary
+        )
+        
+        CircularSpinner(
+            animationDuration: 1.5,
+            diameter: 50,
+            backgroundStyle: Color.black,
+            foregroundStyle: LinearGradient(
+                colors: [.purple, .red],
+                startPoint: .leading,
+                endPoint: .trailing
+            )
+        )
+        
+        CircularSpinner(
+            animationDuration: 1.25,
+            diameter: 50,
             backgroundStyle: .radialGradient(
                 colors: [.green, .red],
                 center: .center,
@@ -117,5 +179,4 @@ public struct CircularSpinner<Background: ShapeStyle, Foreground: ShapeStyle>: V
             foregroundStyle: .cyan.shadow(.drop(radius: 2))
         )
     }
-    .frame(width: 50)
 }
