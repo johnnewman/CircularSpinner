@@ -6,6 +6,8 @@ A small SwiftUI package for drawing an animated circular spinner. Enjoy!
 
 CircularSpinner is a stroked circle with an animated puck in its foreground that infinitely spins. The foreground and background can be any ShapeStyle.  By default, the spinner will fill its container's size.
 
+![Example GIF](/Git\ Resources/spinners.gif)
+
 #### API
  
 You can create a simple spinner using the default initalizer parameters:
