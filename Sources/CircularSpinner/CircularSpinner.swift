@@ -69,11 +69,13 @@ public struct CircularSpinner<Background: ShapeStyle, Foreground: ShapeStyle>: V
             .rotationEffect(.degrees(-90))
     }
     
+    /// This is called every `animationDuration` to rotate the foreground and
+    /// flip its length.
     func cycleAnimation() {
         previousAngle += .degrees(720)
         trimLength.toggle()
     }
-    
+        
     public var body: some View {
         ZStack {
             // Background circle.
@@ -93,95 +95,74 @@ public struct CircularSpinner<Background: ShapeStyle, Foreground: ShapeStyle>: V
     }
 }
 
-extension View {
-    @ViewBuilder func conditionalWidth(_ width: CGFloat?) -> some View {
-        if let width = width {
-            self.frame(width: width)
-        } else {
-            self
-        }
-    }
-}
-
 #Preview("Diameter") {
-    VStack {
+    let diameter: CGFloat = 60
+    return HStack {
         CircularSpinner(
             animationDuration: 2,
-            diameter: 60,
-            backgroundStyle: .black,
-            foregroundStyle: .thickMaterial.shadow(.inner(radius: 3))
+            diameter: diameter,
+            style: .bubbledForeground
         )
         
         CircularSpinner(
             animationDuration: 1.75,
-            diameter: 60,
-            backgroundStyle: Color.secondary,
-            foregroundStyle: Color.primary
+            diameter: diameter,
+            style: .hierarchy
         )
         
         CircularSpinner(
             animationDuration: 1.5,
-            diameter: 60,
-            backgroundStyle: Color.teal,
-            foregroundStyle: LinearGradient(
-                colors: [.purple, .red],
-                startPoint: .leading,
-                endPoint: .trailing
-            )
+            diameter: diameter,
+            style: .accent
         )
         
         CircularSpinner(
             animationDuration: 1.25,
-            diameter: 60,
-            backgroundStyle: .radialGradient(
-                colors: [.green, .red],
-                center: .center,
-                startRadius: 30-10,
-                endRadius: 30
-            ),
-            foregroundStyle: .cyan.shadow(.drop(radius: 2))
+            diameter: diameter,
+            style: .nineties
+        )
+        
+        CircularSpinner(
+            animationDuration: 1,
+            diameter: diameter,
+            backgroundStyle: .white.shadow(.inner(radius: 3)),
+            foregroundStyle: .red.shadow(.inner(radius: 3))
         )
     }
 }
 
 #Preview("ContainerSize") {
-    VStack {
+    HStack(spacing: 16) {
         CircularSpinner(
             strokeWidth: 15,
             animationDuration: 2,
-            backgroundStyle: .black,
-            foregroundStyle: .thickMaterial.shadow(.inner(radius: 3))
+            style: .bubbledForeground
         )
         
         CircularSpinner(
             strokeWidth: 15,
             animationDuration: 1.75,
-            backgroundStyle: Color.secondary,
-            foregroundStyle: Color.primary
+            style: .hierarchy
         )
         
         CircularSpinner(
             strokeWidth: 15,
             animationDuration: 1.5,
-            backgroundStyle: Color.teal,
-            foregroundStyle: LinearGradient(
-                colors: [.purple, .red],
-                startPoint: .leading,
-                endPoint: .trailing
-            )
+            style: .accent
         )
         
         CircularSpinner(
             strokeWidth: 15,
             animationDuration: 1.25,
-            backgroundStyle: .radialGradient(
-                colors: [.green, .red],
-                center: .center,
-                startRadius: 45-15,
-                endRadius: 45
-            ),
-            foregroundStyle: .cyan.shadow(.drop(radius: 2))
+            style: .nineties
+        )
+        
+        CircularSpinner(
+            strokeWidth: 15,
+            animationDuration: 1,
+            backgroundStyle: .white.shadow(.inner(radius: 3)),
+            foregroundStyle: .red.shadow(.inner(radius: 3))
         )
     }
-    .frame(width: 90)
+    .frame(height: 90)
 }
