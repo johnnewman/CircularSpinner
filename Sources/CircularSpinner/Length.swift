@@ -8,7 +8,9 @@
 
 import Foundation
 
+/// This model is used to represent the current foreground trim length.
 enum Length {
+    
     case long, short
     
     var value: CGFloat {
