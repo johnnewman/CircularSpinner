@@ -13,11 +13,8 @@ import SwiftUI
 /// A model for pre-styled spinners.
 public enum SpinnerStyle: CaseIterable {
     
-    case bubbledForeground
-    case hierarchy
-    case accent
-    case nineties
-        
+    case bubbledForeground, hierarchy, accent, nineties
+    
     var background: AnyShapeStyle {
         switch self {
         case .bubbledForeground:
