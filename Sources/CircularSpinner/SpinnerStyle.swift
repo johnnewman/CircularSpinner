@@ -1,5 +1,5 @@
 //
-//  CiricularSpinnerExtensions.swift
+//  SpinnerStyle.swift
 //  CircularSpinner
 //
 //
@@ -11,13 +11,13 @@ import Foundation
 import SwiftUI
 
 /// A model for pre-styled spinners.
-public enum SpinnerStyle {
+public enum SpinnerStyle: CaseIterable {
     
     case bubbledForeground
     case hierarchy
     case accent
     case nineties
-    
+        
     var background: AnyShapeStyle {
         switch self {
         case .bubbledForeground:
@@ -53,7 +53,7 @@ public enum SpinnerStyle {
 
 public extension CircularSpinner where Foreground == AnyShapeStyle, Background == AnyShapeStyle {
     
-    /// Convenience to initialize the CircularSpinner with a provided SpinnerStyle.
+    /// Convenience to initialize the CircularSpinner with a premade SpinnerStyle.
     init(strokeWidth: CGFloat = 10,
          animationDuration: TimeInterval = 1.75,
          diameter: CGFloat? = nil,

@@ -11,10 +11,12 @@ let package = Package(
     products: [
         .library(
             name: "CircularSpinner",
-            targets: ["CircularSpinner"]),
+            targets: ["CircularSpinner"]
+        ),
     ],
     targets: [
         .target(
-            name: "CircularSpinner"),
+            name: "CircularSpinner"
+        )
     ]
 )
