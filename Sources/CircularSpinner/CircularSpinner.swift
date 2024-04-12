@@ -9,7 +9,7 @@
 import SwiftUI
 import Combine
 
-/// A View that will infinitely animate a circle with a foreground that spins.
+/// A View that will infinitely animate a circle with a foreground puck that spins.
 public struct CircularSpinner<Background: ShapeStyle, Foreground: ShapeStyle>: View {
     
     let strokeWidth: CGFloat
@@ -28,16 +28,19 @@ public struct CircularSpinner<Background: ShapeStyle, Foreground: ShapeStyle>: V
     /// This accumulates the ongoing angle to keep the spinner moving.
     @State private var previousAngle: Angle = .zero
     
-    /// This is toggled between values to oscillate the foreground circle's length.
+    /// This is toggled between values to oscillate the foreground puck's length.
     @State private var trimLength: Length = .short
     
-    /// Initializes the CircularSpinner, which will indefinitely animate.
+    /// Initializes an indefinitely animating CircularSpinner.
     /// - Parameters:
-    ///   - strokeWidth: The stroke width to use for the circle.
-    ///   - animationDuration: The duration of a spin cycle that rotates 2 revolutions.
-    ///   - diameter: The diameter of the spinner.
+    ///   - strokeWidth: The stroke width to use for the spinner background and
+    ///   foreground circles.
+    ///   - animationDuration: The duration of one spin cycle, which rotates the
+    ///   puck 2 full revolutions around the circle.
+    ///   - diameter: The diameter of the spinner. When nil, the spinner fills the
+    ///   container's bounds.
     ///   - backgroundStyle: The ShapeStyle to apply to the full background circle.
-    ///   - foregroundStyle: The ShapeStyle to apply to the spinning circle.
+    ///   - foregroundStyle: The ShapeStyle to apply to the spinning puck.
     public init(strokeWidth: CGFloat = 10,
                 animationDuration: TimeInterval = 1.75,
                 diameter: CGFloat? = nil,
@@ -65,11 +68,12 @@ public struct CircularSpinner<Background: ShapeStyle, Foreground: ShapeStyle>: V
                 )
             )
             .foregroundStyle(style)
+            // Start drawing the trim at the top center.
             .rotationEffect(.degrees(-90))
     }
     
     /// This is called every `animationDuration` to rotate the foreground and
-    /// flip its length.
+    /// oscillate its length.
     func cycleAnimation() {
         previousAngle += .degrees(720)
         trimLength.toggle()
@@ -80,7 +84,7 @@ public struct CircularSpinner<Background: ShapeStyle, Foreground: ShapeStyle>: V
             // Background circle.
             circle(style: backgroundStyle, length: 1)
             
-            // Animated forground circle.
+            // Animated forground circle/puck.
             circle(style: foregroundStyle, length: trimLength.value)
                 .rotationEffect(currentAngle)
                 .animation(spinAnimation, value: previousAngle)
