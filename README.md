@@ -2,24 +2,27 @@
 
 A small SwiftUI package for drawing an animated circular spinner. Enjoy!
 
-CircularSpinner is a stroked circle with an animated puck in its foreground that infinitely spins and toggles its length. You can simply declare a CircularSpinner in your View hierarchy and it will automatically and indefinitely animate.
+CircularSpinner is a stroked background circle with a foreground puck that infinitely and oscillates its length between long and short. You can simply declare a CircularSpinner in your View hierarchy and it will automatically and indefinitely animate.
 
-The stroked foreground and background can be any ShapeStyle. By default, the spinner will fill its container's bounds, but you can supply a diameter to the initializer.
+The stroked foreground and background can be any ShapeStyle. This allows for special effects like shadows and gradients. By default, the spinner will fill its container's bounds, but you can supply a diameter to the initializer.
 
 <img src="Git%20Resources/spinners.gif" alt="Example GIF" width="374" height="109" loop=infinite>
 
 #### API
  
-There are two initializers, one that offers the most customization, accepting separate background and forground ShapeStyles:
+There are two initializers. The main initializer offers the most customization, accepting separate background and forground ShapeStyles:
 
 ```Swift
-/// Initializes the CircularSpinner, which will indefinitely animate.
+/// Initializes an indefinitely animating CircularSpinner.
 /// - Parameters:
-///   - strokeWidth: The stroke width to use for the circle.
-///   - animationDuration: The duration of a spin cycle that rotates 2 revolutions.
-///   - diameter: The diameter of the spinner.
+///   - strokeWidth: The stroke width to use for the spinner background and
+///   foreground circles.
+///   - animationDuration: The duration of one spin cycle, which rotates the
+///   puck 2 full revolutions around the circle.
+///   - diameter: The diameter of the spinner. When nil, the spinner fills the
+///   container's bounds.
 ///   - backgroundStyle: The ShapeStyle to apply to the full background circle.
-///   - foregroundStyle: The ShapeStyle to apply to the spinning circle.
+///   - foregroundStyle: The ShapeStyle to apply to the spinning puck.
 public init(strokeWidth: CGFloat = 10,
             animationDuration: TimeInterval = 1.75,
             diameter: CGFloat? = nil,
@@ -28,7 +31,7 @@ public init(strokeWidth: CGFloat = 10,
 ```
 
 _Example use case:_
-```
+```Swift
 CircularSpinner(
     strokeWidth: 15,
     animationDuration: 1,
@@ -36,6 +39,8 @@ CircularSpinner(
     foregroundStyle: .red.shadow(.inner(radius: 3))
 )
 ```
+
+#### Premade styles 
 
 There is a second initializer that accepts a premade SpinnerStyle:
 ```Swift
@@ -50,8 +55,8 @@ _Example use case:_
 CircularSpinner(style: .bubbledForeground)
 ```
 
-Here is an example of each style:
+Here is an example of each SpinnerStyle:
 
 | `bubbledForeground` | `hierarchy` | `accent` | `nineties` |
 | --- | --- | --- | --- |
-| <img src="Git%20Resources/bubbledForeground.jpg" alt="bubbledForeground" width="155" height="155"> | <img src="Git%20Resources/hierarchy.jpg" alt="hierarchy" width="155" height="155"> | <img src="Git%20Resources/accent.jpg" alt="accent" width="155" height="155"> | <img src="Git%20Resources/nineties.jpg" alt="nineties" width="155" height="155"> |
+| <img src="Git%20Resources/bubbledForeground.jpg" alt="bubbledForeground" width="90" height="90"> | <img src="Git%20Resources/hierarchy.jpg" alt="hierarchy" width="90" height="90"> | <img src="Git%20Resources/accent.jpg" alt="accent" width="90" height="90"> | <img src="Git%20Resources/nineties.jpg" alt="nineties" width="90" height="90"> |
