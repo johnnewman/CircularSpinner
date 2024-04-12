@@ -31,12 +31,11 @@ public struct CircularSpinner<Background: ShapeStyle, Foreground: ShapeStyle>: V
     /// This is toggled between values to oscillate the foreground circle's length.
     @State private var trimLength: Length = .short
     
-    /// Initializes the CircularSpinner, which will begin animating as soon as
-    /// it appears.
+    /// Initializes the CircularSpinner, which will indefinitely animate.
     /// - Parameters:
-    ///   - lineWidth: The stroke width to use for the circle.
+    ///   - strokeWidth: The stroke width to use for the circle.
     ///   - animationDuration: The duration of a spin cycle that rotates 2 revolutions.
-    ///   - radius: The radius of the spinner.
+    ///   - diameter: The diameter of the spinner.
     ///   - backgroundStyle: The ShapeStyle to apply to the full background circle.
     ///   - foregroundStyle: The ShapeStyle to apply to the spinning circle.
     public init(strokeWidth: CGFloat = 10,

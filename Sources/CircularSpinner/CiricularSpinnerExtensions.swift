@@ -53,7 +53,7 @@ public enum SpinnerStyle {
 
 public extension CircularSpinner where Foreground == AnyShapeStyle, Background == AnyShapeStyle {
     
-    /// Convenience to initialize the CircularSpinner with a provided SpinnerStyle.
+    /// Convenience to initialize the CircularSpinner with a premade SpinnerStyle.
     init(strokeWidth: CGFloat = 10,
          animationDuration: TimeInterval = 1.75,
          diameter: CGFloat? = nil,
