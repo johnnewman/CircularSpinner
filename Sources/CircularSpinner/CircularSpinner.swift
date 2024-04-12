@@ -99,67 +99,24 @@ public struct CircularSpinner<Background: ShapeStyle, Foreground: ShapeStyle>: V
 }
 
 #Preview("Diameter") {
-    let diameter: CGFloat = 60
-    return HStack {
-        CircularSpinner(
-            animationDuration: 2,
-            diameter: diameter,
-            style: .bubbledForeground
-        )
-        
-        CircularSpinner(
-            animationDuration: 1.75,
-            diameter: diameter,
-            style: .hierarchy
-        )
-        
-        CircularSpinner(
-            animationDuration: 1.5,
-            diameter: diameter,
-            style: .accent
-        )
-        
-        CircularSpinner(
-            animationDuration: 1.25,
-            diameter: diameter,
-            style: .nineties
-        )
-        
+    HStack {
+        ForEach(SpinnerStyle.allCases, id: \.self) { style in
+            CircularSpinner(diameter: 60, style: style)
+        }
         CircularSpinner(
             animationDuration: 1,
-            diameter: diameter,
+            diameter: 60,
             backgroundStyle: .white.shadow(.inner(radius: 3)),
             foregroundStyle: .red.shadow(.inner(radius: 3))
         )
     }
 }
 
-#Preview("ContainerSize") {
+#Preview("Container Size") {
     HStack(spacing: 16) {
-        CircularSpinner(
-            strokeWidth: 15,
-            animationDuration: 2,
-            style: .bubbledForeground
-        )
-        
-        CircularSpinner(
-            strokeWidth: 15,
-            animationDuration: 1.75,
-            style: .hierarchy
-        )
-        
-        CircularSpinner(
-            strokeWidth: 15,
-            animationDuration: 1.5,
-            style: .accent
-        )
-        
-        CircularSpinner(
-            strokeWidth: 15,
-            animationDuration: 1.25,
-            style: .nineties
-        )
-        
+        ForEach(SpinnerStyle.allCases, id: \.self) { style in
+            CircularSpinner(strokeWidth: 15, style: style)
+        }
         CircularSpinner(
             strokeWidth: 15,
             animationDuration: 1,
