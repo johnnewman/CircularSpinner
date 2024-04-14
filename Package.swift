@@ -16,7 +16,8 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "CircularSpinner"
+            name: "CircularSpinner",
+            resources: [.copy("Resources/PrivacyInfo.xcprivacy")]
         )
     ]
 )
