@@ -6,7 +6,8 @@ import PackageDescription
 let package = Package(
     name: "CircularSpinner",
     platforms: [
-        .iOS(.v16)
+        .iOS(.v16),
+        .macOS(.v13)
     ],
     products: [
         .library(
@@ -16,7 +17,8 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "CircularSpinner"
+            name: "CircularSpinner",
+            resources: [.copy("Resources/PrivacyInfo.xcprivacy")]
         )
     ]
 )

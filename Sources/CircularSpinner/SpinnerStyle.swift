@@ -22,7 +22,11 @@ public enum SpinnerStyle: CaseIterable {
         case .hierarchy:
             return Color.secondary.anyShapeStyle
         case .accent:
+            #if os(iOS)
             return Color(uiColor: .systemGray3).anyShapeStyle
+            #else
+            return Color(nsColor: .systemGray).anyShapeStyle
+            #endif
         case .nineties:
             return Color.teal.anyShapeStyle
         }
