@@ -20,7 +20,7 @@ public struct CircularSpinner<Background: ShapeStyle, Foreground: ShapeStyle>: V
     
     let foregroundStyle: Foreground
     
-    let spinAnimation: Animation
+    let animationDuration: TimeInterval
     
     /// This timer will fire each time the spin animation finishes.
     let timer: Publishers.Autoconnect<Timer.TimerPublisher>
@@ -50,7 +50,7 @@ public struct CircularSpinner<Background: ShapeStyle, Foreground: ShapeStyle>: V
         self.diameter = diameter
         self.backgroundStyle = backgroundStyle
         self.foregroundStyle = foregroundStyle
-        self.spinAnimation = .interpolatingSpring(duration: animationDuration)
+        self.animationDuration = animationDuration
         self.timer = Timer.publish(every: animationDuration, on: .main, in: .default).autoconnect()
     }
     
@@ -75,8 +75,10 @@ public struct CircularSpinner<Background: ShapeStyle, Foreground: ShapeStyle>: V
     /// This is called every `animationDuration` to rotate the foreground and
     /// oscillate its length.
     func cycleAnimation() {
-        previousAngle += .degrees(720)
-        trimLength.toggle()
+        withAnimation(.interpolatingSpring(duration: animationDuration)) {
+            previousAngle += .degrees(720)
+            trimLength.toggle()
+        }
     }
         
     public var body: some View {
@@ -87,7 +89,6 @@ public struct CircularSpinner<Background: ShapeStyle, Foreground: ShapeStyle>: V
             // Animated forground circle/puck.
             circle(style: foregroundStyle, length: trimLength.value)
                 .rotationEffect(currentAngle)
-                .animation(spinAnimation, value: previousAngle)
                 .onAppear(perform: cycleAnimation)
                 .onReceive(timer) { _ in
                     cycleAnimation()
@@ -125,4 +126,16 @@ public struct CircularSpinner<Background: ShapeStyle, Foreground: ShapeStyle>: V
         )
     }
     .frame(height: 90)
+}
+
+#Preview("Navigating in") {
+   
+    NavigationStack {
+        NavigationLink {
+            CircularSpinner()
+                .frame(height: 90)
+        } label: {
+            Text("Push")
+        }
+    }
 }
